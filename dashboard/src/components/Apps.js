@@ -110,7 +110,7 @@ const App = () => {
                         gap: '25px',
                         alignItems: 'center'
                     }}>
-                        <a href="#" style={{
+                        <a href="/#" style={{
                             color: '#666',
                             textDecoration: 'none',
                             fontSize: '14px',
@@ -122,7 +122,7 @@ const App = () => {
                             <i className="fa fa-question-circle me-1"></i>
                             Support
                         </a>
-                        <a href="#" style={{
+                        <a href="/#" style={{
                             color: '#666',
                             textDecoration: 'none',
                             fontSize: '14px',
@@ -134,7 +134,7 @@ const App = () => {
                             <i className="fa fa-file-text me-1"></i>
                             Terms
                         </a>
-                        <a href="#" style={{
+                        <a href="/#" style={{
                             color: '#666',
                             textDecoration: 'none',
                             fontSize: '14px',
