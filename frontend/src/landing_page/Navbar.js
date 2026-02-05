@@ -1,14 +1,26 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const handleLogout = () => {
     logout();
+  };
+
+  const handleDashboardClick = (e) => {
+    e.preventDefault();
+    if (user) {
+      // User is logged in, redirect to dashboard
+      window.location.href = "http://localhost:3001/";
+    } else {
+      // User is not logged in, redirect to login page
+      navigate("/login");
+    }
   };
 
   const isActive = (path) => location.pathname === path;
@@ -176,7 +188,8 @@ function Navbar() {
                 <li className="nav-item ms-lg-2 mt-2 mt-lg-0">
                   <a
                     className="btn px-4 py-2"
-                    href="http://localhost:3001/"
+                    href="/#"
+                    onClick={handleDashboardClick}
                     style={{
                       backgroundColor: "transparent",
                       border: "2px solid #387ED1",
