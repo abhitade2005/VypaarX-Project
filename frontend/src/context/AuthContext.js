@@ -7,20 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // eslint-disable-next-line
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
-      // Verify token is still valid
-      verifyToken(token);
-    }
-    setLoading(false);
-  }, []);
-  
-
   const verifyToken = async (token) => {
     try {
       const response = await axios.get("http://localhost:8080/api/auth/verify", {
@@ -37,6 +23,19 @@ export const AuthProvider = ({ children }) => {
       logout();
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (token && storedUser) {
+      setUser(JSON.parse(storedUser));
+      // Verify token is still valid
+      verifyToken(token);
+    }
+    setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const login = (token, userData) => {
     localStorage.setItem("token", token);
