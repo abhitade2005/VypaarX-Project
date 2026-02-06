@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function Signup() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -8,6 +10,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,14 +80,16 @@ export default function Signup() {
         form
       );
 
-      // Store token in localStorage
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      // Update AuthContext state
+      login(response.data.token, response.data.user);
 
-      // Navigate to dashboard or home
-      navigate("/");
+      toast.success("Account created successfully!");
+      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
+      console.error("Signup error:", err);
+      console.error("Error response:", err.response?.data);
       setError(err.response?.data?.error || "Signup failed. Please try again.");
+      toast.error(err.response?.data?.error || "Signup failed. Please try again.");
     } finally {
       setLoading(false);
     }

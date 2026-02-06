@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,14 +23,17 @@ export default function Login() {
         form
       );
       
-      // Store token in localStorage
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      // Update AuthContext state
+      login(response.data.token, response.data.user);
       
-      alert("Login successful!");
-      navigate("/");
+      toast.success("Login successful!");
+      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
+      console.error("Login error details:", err);
+      console.error("Response data:", err.response?.data);
+      console.error("Response status:", err.response?.status);
       setError(err.response?.data?.error || "Login failed. Please try again.");
+      toast.error(err.response?.data?.error || "Login failed. Please try again.");
     }
   };
 

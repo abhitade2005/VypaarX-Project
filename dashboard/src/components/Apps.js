@@ -3,7 +3,7 @@ import React from 'react';
 const App = () => {
     const handleHomeRedirect = () => {
         // Redirect to frontend (assuming frontend runs on port 3000)
-        window.location.href = 'http://localhost:3000';
+        window.location.href = 'https://vypaar-x-project.vercel.app/';
     };
 
     return (

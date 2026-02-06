@@ -5,13 +5,19 @@ import { Link } from "react-router-dom";
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
+    setIsMobileMenuOpen(false);
   };
 
   const handleProfileClick = (index) => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const menuClass = "menu";
@@ -19,8 +25,13 @@ const Menu = () => {
 
   return (
     <div className="menu-container">
-      <img src="logo.png" style={{ width: "50px", height: "auto" }} alt="VypaarX Logo" />
-      <div className="menus">
+      <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+        <i className={`fa ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+      </div>
+      
+      <img src="logo.png" style={{ width: "50px", height: "auto" }} alt="VypaarX Logo" className="menu-logo" />
+      
+      <div className={`menus ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
         <ul>
           <li>
             <Link
@@ -30,7 +41,7 @@ const Menu = () => {
             >
               <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>
                 <i className="fa fa-dashboard me-2"></i>
-                Dashboard
+                <span className="menu-text">Dashboard</span>
               </p>
             </Link>
           </li>
@@ -42,7 +53,7 @@ const Menu = () => {
             >
               <p className={selectedMenu === 1 ? activeMenuClass : menuClass}>
                 <i className="fa fa-list-alt me-2"></i>
-                Orders
+                <span className="menu-text">Orders</span>
               </p>
             </Link>
           </li>
@@ -54,7 +65,7 @@ const Menu = () => {
             >
               <p className={selectedMenu === 2 ? activeMenuClass : menuClass}>
                 <i className="fa fa-briefcase me-2"></i>
-                Holdings
+                <span className="menu-text">Holdings</span>
               </p>
             </Link>
           </li>
@@ -66,7 +77,7 @@ const Menu = () => {
             >
               <p className={selectedMenu === 3 ? activeMenuClass : menuClass}>
                 <i className="fa fa-line-chart me-2"></i>
-                Positions
+                <span className="menu-text">Positions</span>
               </p>
             </Link>
           </li>
@@ -78,7 +89,7 @@ const Menu = () => {
             >
               <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
                 <i className="fa fa-money me-2"></i>
-                Funds
+                <span className="menu-text">Funds</span>
               </p>
             </Link>
           </li>
@@ -90,7 +101,7 @@ const Menu = () => {
             >
               <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
                 <i className="fa fa-home me-2"></i>
-                Home
+                <span className="menu-text">Home</span>
               </p>
             </Link>
           </li>
